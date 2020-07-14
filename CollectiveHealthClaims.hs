@@ -1,14 +1,16 @@
-{-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE OverloadedStrings   #-}
 {-# LANGUAGE ScopedTypeVariables #-}
 
-import Control.Concurrent
-import Control.Monad.IO.Class
-import GHC.Stack
-import Control.Monad
-import Control.Monad.Catch
-import Data.Text (Text)
-import Test.WebDriver
-import Test.WebDriver.Commands.Wait
+import Control.Monad.Catch          (SomeException, handle)
+import Control.Monad.IO.Class       (liftIO)
+import Data.Text                    (Text)
+import GHC.Stack                    (HasCallStack)
+import Test.WebDriver               (Element, Selector (ByCSS, ById, ByXPath),
+                                     WD, WDConfig (..), chrome, click,
+                                     defaultConfig, findElem, findElemFrom,
+                                     findElems, getText, openPage, sendKeys,
+                                     useBrowser)
+import Test.WebDriver.Commands.Wait (waitUntil)
 
 remoteConfig = useBrowser chrome defaultConfig { wdHost = "host.docker.internal"
                                                , wdPort = 4444
