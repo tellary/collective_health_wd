@@ -63,7 +63,9 @@ waitClaimLoaded = waitUntil timeout $ findElem (ByCSS ".Claim")
 loadAllClaims :: WD ()
 loadAllClaims = handle (\(_::SomeException) -> return ()) $ do
   more <- waitUntil timeout $ findElem (ByCSS ".Timeline__loadMore")
+  liftIO $ putStrLn "Found 'load more' button"
   click more
+  loadAllClaims
 
 initClaim :: HasCallStack => Element -> WD Claim
 initClaim el = do
