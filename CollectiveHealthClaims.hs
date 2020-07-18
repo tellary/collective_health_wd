@@ -20,6 +20,7 @@ import Text.Printf                  (printf)
 remoteConfig = useBrowser chrome defaultConfig { wdHost = "host.docker.internal"
                                                , wdPort = 4444
                                                }
+
 wd :: HasCallStack => Text -> Text -> WD [PureClaim]
 wd user pwdIn = do
   openPage "https://my.collectivehealth.com/login"
@@ -138,6 +139,11 @@ sumSelectPhysicalTherapyAdjustedClaims
     . selectPhysicalTherapyClaims
     . removeDeniedAndAdjusted
 
+-- 1. All claims are retrieved,
+-- 2. Deleted claims are filtered out,
+-- 3. Claims for a certain provider are retained,
+-- 4. A one-off hacky solution to filter adjusted claims out is applied,
+-- 5. Sum of remaining claims is computed.
 runSumSelectPhysicalTherapyAdjustedClaims user pwd
   = sumSelectPhysicalTherapyAdjustedClaims <$> runClaims user pwd
 
