@@ -118,7 +118,7 @@ claimDateEq c1 c2
   = pureClaimDate c1 == pureClaimDate c2
 
 -- We currently assume two claims with status
--- `None` and `Adjusted` sit in one day, an error happens overwise
+-- `None` and `Adjusted` sit in one day, an error happens otherwise
 removeDeniedAndAdjusted
  = concat
    . map removeAdjusted
